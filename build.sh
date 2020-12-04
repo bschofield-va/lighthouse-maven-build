@@ -29,6 +29,7 @@ main() {
   if [ "${DEBUG:-}" == "true" ]; then set -x; fi
   if [ $# == 1 ]; then COMMAND="$1"; shift; fi
   if [ -z "${COMMAND:-}" ]; then usage "Command must be specified"; fi
+  MVN_ARGS="$@"
   case $COMMAND in
     non-release) nonReleaseBuild;;
     *) usage "unknown command: $COMMAND";;
@@ -101,9 +102,9 @@ nonReleaseBuild() {
   MVN_ARGS+=" --settings $SETTINGS"
   MVN_ARGS+=" --batch-mode"
   MVN_ARGS+=" -Ddocker.skip=true"
+  MVN_ARGS+=" -Dgit.enforceBranchNames=false"
   MVN_ARGS+=" -Dhealth-apis-releases.nexus.user=$NEXUS_USERNAME"
   MVN_ARGS+=" -Dhealth-apis-releases.nexus.password=$NEXUS_PASSWORD"
-  MVN_ARGS+=" -Dgit.enforceBranchNames=false"
   mvn $MVN_ARGS install
   removeSnapshotsFromCache
 }
