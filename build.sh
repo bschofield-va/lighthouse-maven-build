@@ -89,6 +89,13 @@ configureSettings() {
   defaultSettings>$SETTINGS
 }
 
+removeSnapshotsFromCache() {
+  for f in $(find ~/.m2/repository/ -type d -name "*-SNAPSHOT")
+  do
+    rm -rf $f || true
+  done
+}
+
 nonReleaseBuild() {
   configureSettings
   MVN_ARGS+=" --settings $SETTINGS"
@@ -98,6 +105,7 @@ nonReleaseBuild() {
   MVN_ARGS+=" -Dhealth-apis-releases.nexus.password=$NEXUS_PASSWORD"
   MVN_ARGS+=" -Dgit.enforceBranchNames=false"
   mvn $MVN_ARGS install
+  removeSnapshotsFromCache
 }
 
 main "$@"
