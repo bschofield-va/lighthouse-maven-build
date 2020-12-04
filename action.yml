@@ -1,0 +1,14 @@
+name: 'Lighthouse Maven Build'
+description: 'Build Java projects with Maven for use with Lighthouse'
+inputs:
+  nexus-username:
+    description: 'Nexus user name'
+    required: true
+  nexus-password:
+    description: 'Nexus password'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/build-non-release.sh
+      shell: bash
