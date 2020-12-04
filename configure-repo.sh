@@ -84,7 +84,6 @@ requireTool() {
 
 DELETE_ME=()
 onExit() {
-  echo "${DELETE_ME[@]}"
   if [ "${#DELETE_ME[@]}" -gt 0 ]; then rm -rf ${DELETE_ME[@]}; fi
 }
 trap onExit EXIT
@@ -98,6 +97,7 @@ writeWorkflow() {
   local template=$LMB_DIR/templates/$templateName
   local workflow=.github/workflows/$templateName
   cat $template | envsubst > $workflow
+  echo "Updated $workflow"
 }
 
 updateCodeQl() {
