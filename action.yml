@@ -7,8 +7,14 @@ inputs:
   nexus-password:
     description: 'Nexus password'
     required: true
+  command:
+    description: 'Type of build to create, e.g. non-release'
+    required: true
+    
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/build-non-release.sh
+    - run: |
+        ${{ github.action_path }}/build.sh \
+          
       shell: bash
