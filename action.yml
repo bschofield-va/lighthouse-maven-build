@@ -14,5 +14,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/build.sh
+    - run: |
+        ${{ github.action_path }}/build.sh ${{ inputs.command }} \
+          --nexus-username ${{ inputs.nexus-username }} \
+          --nexus-password ${{ inputs.nexus-password }}
       shell: bash
