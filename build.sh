@@ -5,6 +5,19 @@ usage() {
 cat >/dev/stderr <<EOF
 $0 [options] <command>
 
+Perform a Maven build suitable for automation in the Lighthouse environment.
+Automatically configures Maven to use the Health APIs Nexus server
+
+Options
+--nexus-username <user>
+  The user name for the Health APIs Nexus server
+--nexus-password <password>
+  The password for the Health APIs Nexus server
+
+Commands
+non-release
+  Perform a basic mvn install.
+
 ${1:-}
 EOF
 exit 1
@@ -98,6 +111,8 @@ removeSnapshotsFromCache() {
 }
 
 nonReleaseBuild() {
+  requireOpt nexus-username NEXUS_USERNAME
+  requireOpt nexus-password NEXUS_PASSWORD
   configureSettings
   MVN_ARGS+=" --settings $SETTINGS"
   MVN_ARGS+=" --batch-mode"
