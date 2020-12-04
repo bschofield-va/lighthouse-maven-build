@@ -2,6 +2,7 @@
 set -euo pipefail
 
 LMB_DIR=$(dirname $(readlink -f $0))
+export LMB_REF=$(git log -1 --format='%H')
 
 usage() {
 cat >/dev/stderr <<EOF
