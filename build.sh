@@ -29,10 +29,9 @@ main() {
   if [ "${DEBUG:-}" == "true" ]; then set -x; fi
   if [ $# == 1 ]; then COMMAND="$1"; shift; fi
   if [ -z "${COMMAND:-}" ]; then usage "Command must be specified"; fi
-  local command=$1
-  case $command in
+  case $COMMAND in
     non-release) nonReleaseBuild;;
-    *) usage "unknown command: $command";;
+    *) usage "unknown command: $COMMAND";;
   esac
 }
 
